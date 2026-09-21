@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual Gallery - Explore the Visual World</title>
+  <meta name="description" content="A modern responsive image gallery demonstrating HTML, CSS Grid, and Vanilla JavaScript skills.">
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts for clean typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- HEADER / NAVIGATION -->
+  <header class="navbar" id="home">
+    <div class="container nav-container">
+      <a href="#home" class="logo">
+        <span class="logo-icon">✨</span>
+        <span class="logo-text">Visual Gallery</span>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="nav-links" id="navLinks" aria-label="Main Navigation">
+        <ul>
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#gallery" class="nav-link">Gallery</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+        </ul>
+      </nav>
+
+      <!-- Right Nav Controls: Theme Toggle & Mobile Toggle -->
+      <div class="nav-actions">
+        <!-- Theme Toggle Button -->
+        <button type="button" class="theme-toggle" id="themeToggleBtn" aria-label="Toggle dark and light mode theme" title="Toggle Light/Dark Theme">
+          <span class="theme-icon sun-icon">☀️</span>
+          <span class="theme-icon moon-icon">🌙</span>
+        </button>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button type="button" class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+      <div class="container hero-container">
+        <div class="hero-content">
+          <span class="badge">Portfolio &amp; Showcase</span>
+          <h1 class="hero-title">Explore the Visual World</h1>
+          <p class="hero-subtitle">
+            Discover beautiful moments through a collection of stunning images curated across nature, architecture, travel, and wildlife.
+          </p>
+          <div class="hero-actions">
+            <a href="#gallery" class="btn btn-primary" id="exploreBtn">
+              Explore Gallery
+              <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <polyline points="19 12 12 19 5 12"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY SECTION -->
+    <section class="gallery-section" id="gallery">
+      <div class="container">
+        
+        <!-- SECTION HEADER & SEARCH / SORT CONTROLS -->
+        <div class="section-header">
+          <div class="section-header-top">
+            <div>
+              <h2 class="section-title">Photo Collection</h2>
+              <p class="section-subtitle">Search, filter by category, favorite, or add your own images.</p>
+            </div>
+            
+            <!-- + ADD IMAGE BUTTON -->
+            <button type="button" class="btn btn-primary add-image-btn" id="openAddModalBtn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              <span>Add Image</span>
+            </button>
+          </div>
+
+          <!-- CONTROLS BAR: SEARCH & SORT -->
+          <div class="controls-bar">
+            <!-- Search Box -->
+            <div class="search-box">
+              <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="searchInput" placeholder="Search photos by title..." aria-label="Search photos by title">
+              <button type="button" id="clearSearchBtn" class="clear-search-btn hidden" aria-label="Clear search text">&times;</button>
+            </div>
+
+            <!-- Sort Dropdown Box -->
+            <div class="sort-box">
+              <label for="sortSelect" class="sort-label">Sort by:</label>
+              <select id="sortSelect" class="sort-select" aria-label="Sort images in gallery">
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="name-asc">Name (A - Z)</option>
+                <option value="name-desc">Name (Z - A)</option>
+                <option value="favorites">Favorites First</option>
+              </select>
+            </div>
+          </div>
+          
+          <!-- Category Filter Buttons & Add Category -->
+          <div class="filter-container" role="tablist" id="filterContainer" aria-label="Gallery category filters">
+            <button type="button" class="filter-btn active" data-filter="all" role="tab" aria-selected="true">All</button>
+            <button type="button" class="filter-btn" data-filter="nature" role="tab" aria-selected="false">Nature</button>
+            <button type="button" class="filter-btn" data-filter="architecture" role="tab" aria-selected="false">Architecture</button>
+            <button type="button" class="filter-btn" data-filter="travel" role="tab" aria-selected="false">Travel</button>
+            <button type="button" class="filter-btn" data-filter="animals" role="tab" aria-selected="false">Animals</button>
+            <button type="button" class="filter-btn filter-btn-fav" data-filter="favorites" role="tab" aria-selected="false">❤️ Favorites</button>
+
+            <!-- + ADD CATEGORY BUTTON -->
+            <button type="button" class="add-category-btn" id="openAddCategoryBtn" title="Create a new custom category">+ Category</button>
+          </div>
+        </div>
+
+        <!-- IMAGE GRID CONTAINER -->
+        <div class="gallery-grid" id="galleryGrid">
+
+          <!-- NATURE ITEMS -->
+          <article class="gallery-card" data-category="nature" data-id="img-1" data-timestamp="1">
+            <div class="card-image-wrapper">
+              <button type="button" class="favorite-btn" aria-label="Add to favorites" title="Favorite">🤍</button>
+              <button type="button" class="delete-btn" aria-label="Delete image" title="Delete Image">🗑️</button>
+              <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80" alt="Majestic snowy mountain range rising above the clouds" loading="lazy">
+              <div class="card-overlay">
+                <span class="card-category">Nature</span>
+                <h3 class="card-title">Majestic Mountain Range</h3>
+                <button type="button" class="view-btn" aria-label="View Majestic Mountain Range in lightbox">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    <line x1="11" y1="8" x2="11" y2="14"></line>
+                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                  </svg>
+                  <span>View</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="gallery-card" data-category="nature" data-id="img-2" data-timestamp="2">
+            <div class="card-image-wrapper">
+              <button type="button" class="favorite-btn" aria-label="Add to favorites" title="Favorite">🤍</button>
+              <button type="button" class="delete-btn" aria-label="Delete image" title="Delete Image">🗑️</button>
+              <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80" alt="Mystic green pine forest immersed in morning fog" loading="lazy">
+              <div class="card-overlay">
+                <span class="card-category">Nature</span>
+                <h3 class="card-title">Mystic Pine Forest</h3>
+                <button type="button" class="view-btn" aria-label="View Mystic Pine Forest in lightbox">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    <line x1="11" y1="8" x2="11" y2="14"></line>
+                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                  </svg>
+                  <span>View</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="gallery-card" data-category="nature" data-id="img-3" data-timestamp="3">
+            <div class="card-image-wrapper">
+              <button type="button" class="favorite-btn" aria-label="Add to favorites" title="Favorite">🤍</button>
+              <button type="button" class="delete-btn" aria-label="Delete image" title="Delete Image">🗑️</button>
+              <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" alt="Crystal clear mountain lake reflecting scenic surrounding peaks" loading="lazy">
+              <div class="card-overlay">
+                <span class="card-category">Nature</span>
+                <h3 class="card-title">Serene Alpine Lake</h3>
+                <button type="button" class="view-btn" aria-label="View Serene Alpine Lake in lightbox">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    <line x1="11" y1="8" x2="11" y2="14"></line>
+                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                  </svg>
+                  <span>View</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- ARCHITECTURE ITEMS -->
+          <article class="gallery-card" data-category="architecture" data-id="img-4" data-timestamp="4">
+            <div class="card-image-wrapper">
+              <button type="button" class="favorite-btn" aria-label="Add to favorites" title="Favorite">🤍</button>
+              <button type="button" class="delete-btn" aria-label="Delete image" title="Delete Image">🗑️</button>
+              <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80" alt="Tall glass skyscraper looking up from ground level" loading="lazy">
+              <div class="card-overlay">
+                <span class="card-category">Architecture</span>
+                <h3 class="card-title">Modern Glass Skyscraper</h3>
+                <button type="button" class="view-btn" aria-label="View Modern Glass Skyscraper in lightbox">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    <line x1="11" y1="8" x2="11" y2="14"></line>
+                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                  </svg>
+                  <span>View</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="gallery-card" data-category="architecture" data-id="img-5" data-timestamp="5">
+            <div class="card-image-wrapper">
+              <button type="button" class="favorite-btn" aria-label="Add to favorites" title="Favorite">🤍</button>
+              <button type="button" class="delete-btn" aria-label="Delete image" title="Delete Image">🗑️</button>
+              <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80" alt="Clean geometric modern architecture facade with sharp angles" loading="lazy">
+              <div class="card-overlay">
+                <span class="card-category">Architecture</span>
+                <h3 class="card-title">Minimalist Geometry</h3>
+                <button type="button" class="view-btn" aria-label="View Minimalist Geometry in lightbox">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    <line x1="11" y1="8" x2="11" y2="14"></line>
+                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                  </svg>
+                  <span>View</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="gallery-card" data-category="architecture" data-id="img-6" data-timestamp="6">
+            <div class="card-image-wrapper">
+              <button type="button" class="favorite-btn" aria-label="Add to favorites" title="Favorite">🤍</button>
+              <button type="button" class="delete-btn" aria-label="Delete image" title="Delete Image">🗑️</button>
+              <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=1200&q=80" alt="Iconic suspension bridge structure illuminated at dusk" loading="lazy">
+              <div class="card-overlay">
+                <span class="card-category">Architecture</span>
+                <h3 class="card-title">Golden Hour Bridge</h3>
+                <button type="button" class="view-btn" aria-label="View Golden Hour Bridge in lightbox">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    <line x1="11" y1="8" x2="11" y2="14"></line>
+                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                  </svg>
+                  <span>View</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- TRAVEL ITEMS -->
+          <article class="gallery-card" data-category="travel" data-id="img-7" data-timestamp="7">
+            <div class="card-image-wrapper">
+              <button type="button" class="favorite-btn" aria-label="Add to favorites" title="Favorite">🤍</button>
+              <button type="button" class="delete-btn" aria-label="Delete image" title="Delete Image">🗑️</button>
+              <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80" alt="Pristine white sand tropical beach with turquoise ocean water" loading="lazy">
+              <div class="card-overlay">
+                <span class="card-category">Travel</span>
+                <h3 class="card-title">Tropical Paradise Beach</h3>
+                <button type="button" class="view-btn" aria-label="View Tropical Paradise Beach in lightbox">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    <line x1="11" y1="8" x2="11" y2="14"></line>
+                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                  </svg>
+                  <span>View</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="gallery-card" data-category="travel" data-id="img-8" data-timestamp="8">
+            <div class="card-image-wrapper">
+              <button type="button" class="favorite-btn" aria-label="Add to favorites" title="Favorite">🤍</button>
+              <button type="button" class="delete-btn" aria-label="Delete image" title="Delete Image">🗑️</button>
+              <img src="https://images.unsplash.com/photo-1496568816309-51d7c20e3b21?auto=format&fit=crop&w=1200&q=80" alt="Dynamic city street view illuminated by colorful night lights" loading="lazy">
+              <div class="card-overlay">
+                <span class="card-category">Travel</span>
+                <h3 class="card-title">Vibrant City Lights</h3>
+                <button type="button" class="view-btn" aria-label="View Vibrant City Lights in lightbox">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    <line x1="11" y1="8" x2="11" y2="14"></line>
+                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                  </svg>
+                  <span>View</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="gallery-card" data-category="travel" data-id="img-9" data-timestamp="9">
+            <div class="card-image-wrapper">
+              <button type="button" class="favorite-btn" aria-label="Add to favorites" title="Favorite">🤍</button>
+              <button type="button" class="delete-btn" aria-label="Delete image" title="Delete Image">🗑️</button>
+              <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80" alt="Scenic historic European castle and ancient architecture" loading="lazy">
+              <div class="card-overlay">
+                <span class="card-category">Travel</span>
+                <h3 class="card-title">Ancient European Landmark</h3>
+                <button type="button" class="view-btn" aria-label="View Ancient European Landmark in lightbox">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    <line x1="11" y1="8" x2="11" y2="14"></line>
+                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                  </svg>
+                  <span>View</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- ANIMALS ITEMS -->
+          <article class="gallery-card" data-category="animals" data-id="img-10" data-timestamp="10">
+            <div class="card-image-wrapper">
+              <button type="button" class="favorite-btn" aria-label="Add to favorites" title="Favorite">🤍</button>
+              <button type="button" class="delete-btn" aria-label="Delete image" title="Delete Image">🗑️</button>
+              <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=1200&q=80" alt="Close up portrait of a curious house cat with striking eyes" loading="lazy">
+              <div class="card-overlay">
+                <span class="card-category">Animals</span>
+                <h3 class="card-title">Curious House Cat</h3>
+                <button type="button" class="view-btn" aria-label="View Curious House Cat in lightbox">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    <line x1="11" y1="8" x2="11" y2="14"></line>
+                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                  </svg>
+                  <span>View</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="gallery-card" data-category="animals" data-id="img-11" data-timestamp="11">
+            <div class="card-image-wrapper">
+              <button type="button" class="favorite-btn" aria-label="Add to favorites" title="Favorite">🤍</button>
+              <button type="button" class="delete-btn" aria-label="Delete image" title="Delete Image">🗑️</button>
+              <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=1200&q=80" alt="Happy golden retriever dog running outdoors in sunny field" loading="lazy">
+              <div class="card-overlay">
+                <span class="card-category">Animals</span>
+                <h3 class="card-title">Playful Golden Retriever</h3>
+                <button type="button" class="view-btn" aria-label="View Playful Golden Retriever in lightbox">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    <line x1="11" y1="8" x2="11" y2="14"></line>
+                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                  </svg>
+                  <span>View</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="gallery-card" data-category="animals" data-id="img-12" data-timestamp="12">
+            <div class="card-image-wrapper">
+              <button type="button" class="favorite-btn" aria-label="Add to favorites" title="Favorite">🤍</button>
+              <button type="button" class="delete-btn" aria-label="Delete image" title="Delete Image">🗑️</button>
+              <img src="https://images.unsplash.com/photo-1564349683136-77e08dba1ef9?auto=format&fit=crop&w=1200&q=80" alt="Cute giant panda bear chewing bamboo leaves in nature preserve" loading="lazy">
+              <div class="card-overlay">
+                <span class="card-category">Animals</span>
+                <h3 class="card-title">Wild Panda Bear</h3>
+                <button type="button" class="view-btn" aria-label="View Wild Panda Bear in lightbox">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    <line x1="11" y1="8" x2="11" y2="14"></line>
+                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                  </svg>
+                  <span>View</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+        </div><!-- /gallery-grid -->
+
+        <!-- Empty Results Message -->
+        <div class="empty-results hidden" id="emptyResults">
+          <span class="empty-icon">🔍</span>
+          <h3>No matching images found</h3>
+          <p>Try adjusting your search query or filter options.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="about-section" id="about">
+      <div class="container about-container">
+        <div class="about-card">
+          <div class="about-content">
+            <span class="badge">About Project</span>
+            <h2>Crafted with Pure Web Standards</h2>
+            <p>
+              <strong>Visual Gallery</strong> is an interactive web showcase built using HTML5, CSS3 Grid &amp; Flexbox, and Vanilla JavaScript. It demonstrates clean code practices, responsive layout techniques, dark/light theme persistence, real-time search, sorting, favorite management, dynamic image &amp; category creation, and keyboard-accessible modal overlays.
+            </p>
+            <ul class="features-list">
+              <li>⚡ Pure Vanilla JavaScript (No frameworks)</li>
+              <li>🌙 Dark / Light Mode with LocalStorage</li>
+              <li>🔍 Real-Time Search &amp; Custom Sorting</li>
+              <li>❤️ Favorites &amp; Custom Category Support</li>
+              <li>➕ Add &amp; Delete Image Functionality</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX MODAL CONTAINER -->
+  <div class="lightbox-modal" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Image preview lightbox">
+    <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+    
+    <div class="lightbox-container">
+      <!-- Close Button (Positioned comfortably inside modal header/container) -->
+      <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close lightbox modal (Escape key)" title="Close (Esc)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <!-- Main Display Content -->
+      <div class="lightbox-content">
+        <!-- Navigation Prev -->
+        <button type="button" class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous image (Left arrow key)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <!-- Image Wrapper -->
+        <div class="lightbox-image-wrapper">
+          <img src="" alt="" id="lightboxImage" class="lightbox-img">
+        </div>
+
+        <!-- Navigation Next -->
+        <button type="button" class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next image (Right arrow key)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Caption & Footer Info -->
+      <div class="lightbox-caption">
+        <span class="lightbox-category" id="lightboxCategory">Category</span>
+        <h2 class="lightbox-title" id="lightboxTitle">Image Title</h2>
+        <span class="lightbox-counter" id="lightboxCounter">1 / 12</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD IMAGE MODAL CONTAINER -->
+  <div class="add-modal-backdrop" id="addModal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Add new image modal">
+    <div class="add-modal-container">
+      <button type="button" class="add-modal-close" id="closeAddModalBtn" aria-label="Close modal">&times;</button>
+      <div class="add-modal-header">
+        <h2 class="add-modal-title">Add New Image</h2>
+        <p class="add-modal-subtitle">Upload an image file from your computer to add to the gallery.</p>
+      </div>
+      <form id="addImageForm" class="add-modal-form">
+        <div class="form-group">
+          <label for="imageFileInput" class="form-label">Select Image File *</label>
+          <div class="file-dropzone" id="fileDropzone">
+            <input type="file" id="imageFileInput" accept="image/*" class="file-input" required>
+            <div class="dropzone-content" id="dropzoneContent">
+              <span class="dropzone-icon">📷</span>
+              <p class="dropzone-text" id="dropzoneText">Click to select an image from your computer</p>
+              <span class="dropzone-hint">Supports PNG, JPG, WEBP, GIF</span>
+            </div>
+            <div class="file-preview-wrapper hidden" id="filePreviewWrapper">
+              <img id="imagePreview" src="" alt="Selected image preview" class="file-preview-img">
+              <button type="button" class="change-file-btn" id="changeFileBtn">Change Image</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="imageTitleInput" class="form-label">Image Title *</label>
+          <input type="text" id="imageTitleInput" class="form-control" placeholder="e.g. Sunset Mountain View" required>
+        </div>
+        <div class="form-group">
+          <label for="imageCategorySelect" class="form-label">Category *</label>
+          <select id="imageCategorySelect" class="form-control" required>
+            <option value="nature">Nature</option>
+            <option value="architecture">Architecture</option>
+            <option value="travel">Travel</option>
+            <option value="animals">Animals</option>
+          </select>
+        </div>
+        <div class="add-modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelAddBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add to Gallery</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADD CATEGORY MODAL CONTAINER -->
+  <div class="add-modal-backdrop" id="addCategoryModal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Add new category modal">
+    <div class="add-modal-container modal-sm">
+      <button type="button" class="add-modal-close" id="closeAddCategoryModalBtn" aria-label="Close modal">&times;</button>
+      <div class="add-modal-header">
+        <h2 class="add-modal-title">Add New Category</h2>
+        <p class="add-modal-subtitle">Create a custom category to tag and filter your photos.</p>
+      </div>
+      <form id="addCategoryForm" class="add-modal-form">
+        <div class="form-group">
+          <label for="categoryNameInput" class="form-label">Category Name *</label>
+          <input type="text" id="categoryNameInput" class="form-control" placeholder="e.g. Portraits, Landscapes, Urban" required>
+        </div>
+        <div class="add-modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelAddCategoryBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Category</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-brand">
+        <span class="logo-icon">✨</span>
+        <span class="logo-text">Visual Gallery</span>
+      </div>
+      <p class="copyright">&copy; 2026 Visual Gallery. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#home" class="footer-link">Home</a>
+        <a href="#gallery" class="footer-link">Gallery</a>
+        <a href="#about" class="footer-link">About</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script -->
+  <script src="script.js"></script>
+</body>
+</html>
